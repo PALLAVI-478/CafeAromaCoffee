@@ -1,0 +1,27 @@
+CAFE AROMA.COFFEE - QUICK START
+
+IMPORTANT:
+Do NOT double-click an HTML file in templates. These are Flask templates and need the Flask server.
+
+EASIEST METHOD ON WINDOWS:
+1. Extract this ZIP.
+2. Open the extracted CafeWebsite folder in VS Code.
+3. Double-click START_CAFE.bat in File Explorer.
+4. Wait for the terminal to say the website is starting.
+5. Your browser will open http://127.0.0.1:5000 automatically.
+
+If Windows blocks the batch file, open the VS Code terminal and run:
+    python -m venv venv
+    venv\Scripts\activate
+    pip install -r requirements.txt
+    python database.py
+    python app.py
+Then open:
+    http://127.0.0.1:5000
+
+OWNER DEMO LOGIN
+Email: owner@cafe.com
+Password: owner123
+
+The database file is created automatically by database.py.
+Do not upload cafe.db to public GitHub.
