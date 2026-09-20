@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>My Account - Café Aroma</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+
+<div class="login-page">
+
+    <div class="login-box">
+
+        <div class="login-logo">
+            ☕
+        </div>
+
+        <h1>
+            My Account
+        </h1>
+
+        <p>
+            Welcome to Café Aroma!
+        </p>
+
+        <hr>
+
+        <h2>
+            👤 {{ name }}
+        </h2>
+
+        <p>
+            📧 {{ email }}
+        </p>
+
+        <button onclick="location.href='/cart'">
+            🛒 My Cart
+        </button>
+
+        <button onclick="alert('Orders will be added next!')">
+            📦 My Orders
+        </button>
+
+        <button onclick="location.href='/logout'">
+            🚪 Logout
+        </button>
+
+        <a href="/" class="back-home">
+            ← Back to Home
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

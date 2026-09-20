@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>My Cart - Café Aroma.coffee</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+    <style>
+
+        .cart-page {
+            min-height: 100vh;
+            background: #f8f3ed;
+            padding: 50px 20px;
+        }
+
+        .cart-container {
+            max-width: 950px;
+            margin: auto;
+        }
+
+        .cart-title {
+            text-align: center;
+            margin-bottom: 35px;
+            color: #6f4329;
+        }
+
+        .cart-item {
+            background: white;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 18px;
+
+            display: flex;
+            align-items: center;
+            gap: 20px;
+
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        }
+
+        .cart-emoji {
+            font-size: 45px;
+            min-width: 60px;
+            text-align: center;
+        }
+
+        .cart-details {
+            flex: 1;
+        }
+
+        .cart-details h2 {
+            margin: 0 0 5px;
+            color: #5a2d1b;
+        }
+
+        .cart-details p {
+            color: #777;
+            margin-bottom: 12px;
+        }
+
+        /* QUANTITY */
+
+        .quantity-area {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .quantity-area button {
+            width: 35px;
+            height: 35px;
+
+            border: none;
+            border-radius: 50%;
+
+            background: #6f4329;
+            color: white;
+
+            font-size: 20px;
+            font-weight: bold;
+
+            cursor: pointer;
+        }
+
+        .quantity-area button:hover {
+            opacity: 0.85;
+        }
+
+        .quantity-input {
+            width: 55px;
+            height: 35px;
+
+            text-align: center;
+
+            border: 1px solid #ddd;
+            border-radius: 8px;
+
+            font-size: 16px;
+        }
+
+        /* UPDATE */
+
+        .update-btn {
+            border: none;
+
+            padding: 8px 14px;
+
+            background: #8b5e3c;
+            color: white;
+
+            border-radius: 8px;
+
+            cursor: pointer;
+        }
+
+        .update-btn:hover {
+            opacity: 0.85;
+        }
+
+        /* ITEM TOTAL */
+
+        .item-total {
+            font-weight: bold;
+
+            min-width: 100px;
+
+            text-align: right;
+
+            font-size: 18px;
+
+            color: #6f4329;
+        }
+
+        /* REMOVE */
+
+        .remove-btn {
+            border: none;
+
+            padding: 9px 13px;
+
+            border-radius: 8px;
+
+            background: #eee;
+
+            color: #8b0000;
+
+            cursor: pointer;
+        }
+
+        .remove-btn:hover {
+            background: #f5dede;
+        }
+
+        /* SUMMARY */
+
+        .cart-summary {
+            background: white;
+
+            padding: 25px;
+
+            border-radius: 18px;
+
+            margin-top: 25px;
+
+            text-align: right;
+
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        }
+
+        .cart-summary h2 {
+            margin-bottom: 20px;
+            color: #5a2d1b;
+        }
+
+        /* CHECKOUT */
+
+        .checkout-btn {
+            display: inline-block;
+
+            padding: 13px 25px;
+
+            background: #6f4329;
+
+            color: white;
+
+            text-decoration: none;
+
+            border-radius: 25px;
+
+            font-weight: bold;
+        }
+
+        .checkout-btn:hover {
+            opacity: 0.85;
+        }
+
+        /* CONTINUE */
+
+        .continue-btn {
+            display: inline-block;
+
+            margin-top: 20px;
+
+            color: #6f4329;
+
+            text-decoration: none;
+
+            font-weight: bold;
+        }
+
+        /* EMPTY CART */
+
+        .empty-cart {
+            background: white;
+
+            padding: 50px;
+
+            text-align: center;
+
+            border-radius: 20px;
+        }
+
+        .empty-cart div {
+            font-size: 60px;
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 700px) {
+
+            .cart-item {
+                flex-wrap: wrap;
+            }
+
+            .cart-details {
+                min-width: 60%;
+            }
+
+            .item-total {
+                text-align: left;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+<div class="cart-page">
+
+    <div class="cart-container">
+
+        <h1 class="cart-title">
+            🛒 My Cart
+        </h1>
+
+
+        {% if cart_items %}
+
+            {% for item in cart_items %}
+
+            <div class="cart-item">
+
+                <!-- FOOD EMOJI -->
+
+                <div class="cart-emoji">
+                    {{ item["emoji"] }}
+                </div>
+
+
+                <!-- DETAILS -->
+
+                <div class="cart-details">
+
+                    <h2>
+                        {{ item["name"] }}
+                    </h2>
+
+                    <p>
+                        ₹{{ "%.2f"|format(item["price"]) }} each
+                    </p>
+
+
+                    <!-- QUANTITY -->
+
+                    <form
+                        method="POST"
+                        action="/update-cart/{{ item['id'] }}"
+                    >
+
+                        <div class="quantity-area">
+
+                            <!-- MINUS -->
+
+                            <button
+                                type="button"
+                                onclick="changeQuantity(
+                                    'quantity-{{ item["id"] }}',
+                                    -1
+                                )"
+                            >
+                                −
+                            </button>
+
+
+                            <!-- NUMBER -->
+
+                            <input
+                                id="quantity-{{ item['id'] }}"
+                                class="quantity-input"
+
+                                type="number"
+
+                                name="quantity"
+
+                                value="{{ item['quantity'] }}"
+
+                                min="1"
+                            >
+
+
+                            <!-- PLUS -->
+
+                            <button
+                                type="button"
+                                onclick="changeQuantity(
+                                    'quantity-{{ item["id"] }}',
+                                    1
+                                )"
+                            >
+                                +
+                            </button>
+
+
+                            <!-- UPDATE -->
+
+                            <button
+                                type="submit"
+                                class="update-btn"
+                            >
+                                Update
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+
+                <!-- ITEM TOTAL -->
+
+                <div class="item-total">
+
+                    ₹{{ "%.2f"|format(
+                        item["price"] * item["quantity"]
+                    ) }}
+
+                </div>
+
+
+                <!-- REMOVE -->
+
+                <form
+                    method="POST"
+                    action="/remove-from-cart/{{ item['id'] }}"
+                >
+
+                    <button
+                        type="submit"
+                        class="remove-btn"
+                    >
+                        🗑️ Remove
+                    </button>
+
+                </form>
+
+            </div>
+
+            {% endfor %}
+
+
+            <!-- CART SUMMARY -->
+
+            <div class="cart-summary">
+
+                <h2>
+
+                    🧾 Total:
+
+                    ₹{{ "%.2f"|format(total) }}
+
+                </h2>
+
+
+                <!-- CHECKOUT -->
+
+                <a
+                    href="/checkout"
+                    class="checkout-btn"
+                >
+                    💳 Checkout
+                </a>
+
+            </div>
+
+
+        {% else %}
+
+            <!-- EMPTY CART -->
+
+            <div class="empty-cart">
+
+                <div>
+                    🛒
+                </div>
+
+                <h2>
+                    Your cart is empty
+                </h2>
+
+                <p>
+                    Add some delicious items from our menu!
+                </p>
+
+            </div>
+
+        {% endif %}
+
+
+        <!-- CONTINUE SHOPPING -->
+
+        <div style="text-align: center;">
+
+            <a
+                href="/"
+                class="continue-btn"
+            >
+                ← Continue Shopping
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- QUANTITY JAVASCRIPT -->
+
+<script>
+
+function changeQuantity(inputId, change) {
+
+    const input = document.getElementById(inputId);
+
+    let currentValue = parseInt(input.value) || 1;
+
+    currentValue += change;
+
+    if (currentValue < 1) {
+        currentValue = 1;
+    }
+
+    input.value = currentValue;
+}
+
+</script>
+
+
+</body>
+
+</html>

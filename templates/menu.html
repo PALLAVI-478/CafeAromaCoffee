@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Menu Management - Café Aroma</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+    <style>
+
+        .management-page {
+            min-height: 100vh;
+            background: #f8f3ed;
+            padding: 40px 20px;
+        }
+
+        .management-container {
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        .management-container h1 {
+            text-align: center;
+        }
+
+        .add-button {
+            display: inline-block;
+            background: #6f4329;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 20px;
+            text-decoration: none;
+            margin-bottom: 25px;
+        }
+
+        .menu-management-card {
+            background: white;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .food-icon {
+            font-size: 40px;
+        }
+
+        .item-info {
+            flex: 1;
+        }
+
+        .item-info h2 {
+            margin: 0;
+        }
+
+        .edit-btn,
+        .delete-btn {
+            padding: 9px 13px;
+            border-radius: 8px;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .edit-btn {
+            background: #eee;
+            color: #6f4329;
+        }
+
+        .delete-btn {
+            background: #f5dddd;
+            color: #900;
+        }
+
+        .delete-form {
+            display: inline;
+        }
+
+        .back-dashboard {
+            display: block;
+            margin-top: 25px;
+            color: #6f4329;
+            text-decoration: none;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="management-page">
+
+    <div class="management-container">
+
+        <h1>
+            🍴 Menu Management
+        </h1>
+
+        <a href="/add-menu"
+           class="add-button">
+
+            ➕ Add Menu Item
+
+        </a>
+
+
+        {% for item in menu_items %}
+
+        <div class="menu-management-card">
+
+            <div class="food-icon">
+                {{ item["emoji"] }}
+            </div>
+
+            <div class="item-info">
+
+                <h2>
+                    {{ item["name"] }}
+                </h2>
+
+                <p>
+                    {{ item["description"] }}
+                </p>
+
+                <strong>
+                    ₹{{ item["price"] }}
+                </strong>
+
+            </div>
+
+
+            <a
+                href="/edit-menu/{{ item['id'] }}"
+                class="edit-btn"
+            >
+                ✏️ Edit
+            </a>
+
+
+            <form
+                method="POST"
+                action="/delete-menu/{{ item['id'] }}"
+                class="delete-form"
+                onsubmit="return confirm('Delete this item?');"
+            >
+
+                <button
+                    type="submit"
+                    class="delete-btn"
+                >
+                    🗑️ Delete
+                </button>
+
+            </form>
+
+        </div>
+
+        {% endfor %}
+
+
+        <a href="/owner-dashboard"
+           class="back-dashboard">
+
+            ← Back to Dashboard
+
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

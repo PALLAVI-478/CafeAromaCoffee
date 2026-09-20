@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Café Aroma.coffee</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+
+        <div class="logo">
+            ☕ Café Aroma.coffee
+        </div>
+
+        <div class="nav-links">
+            <a href="/">Home</a>
+
+            <a href="#about">About</a>
+            <a href="#contact">Contact</a>
+
+            {% if session.get("user_id") %}
+                <a href="/account">My Account</a>
+                <a href="/cart">🛒 My Cart</a>
+                <a href="/logout">Logout</a>
+            {% else %}
+                <a href="/login">Login</a>
+                <a href="/register">Register</a>
+            {% endif %}
+
+            <a href="/owner-login">Owner</a>
+        </div>
+
+    </nav>
+
+
+    <!-- Hero Section -->
+    <section class="hero">
+
+        <h1>Welcome to Café Aroma.coffee ☕</h1>
+
+        <p>
+            Delicious food, refreshing drinks and a cozy atmosphere.
+        </p>
+
+        {% if session.get("user_id") %}
+            <p>
+                Welcome back! Choose your favourite items below ❤️
+            </p>
+        {% else %}
+            <p>
+                Login to order your favourite food and drinks.
+            </p>
+        {% endif %}
+
+    </section>
+
+
+    <!-- About Section -->
+    <section class="about-section" id="about">
+
+        <h2>About Café Aroma.coffee ☕</h2>
+
+        <p>
+            Welcome to Café Aroma.coffee, your cozy destination for
+            delicious food, refreshing beverages and sweet treats.
+            We are happy to serve fresh and tasty food in a comfortable
+            atmosphere.
+        </p>
+
+        <p>
+            Whether you are looking for a relaxing coffee, a quick snack,
+            or a delicious dessert, Café Aroma.coffee is here for you.
+        </p>
+
+    </section>
+
+
+    <!-- Menu Section -->
+    <section class="menu-section">
+
+        <h2>Our Menu</h2>
+
+        <div class="menu-container">
+
+            {% for item in menu_items %}
+
+            <div class="menu-card">
+
+                <div class="food-emoji">
+                    {{ item["emoji"] }}
+                </div>
+
+                <h3>
+                    {{ item["name"] }}
+                </h3>
+
+                <p>
+                    {{ item["description"] }}
+                </p>
+
+                <h4>
+                    ₹{{ item["price"] }}
+                </h4>
+
+                {% if session.get("user_id") %}
+
+                    <form method="POST"
+                          action="{{ url_for('add_to_cart', item_id=item['id']) }}">
+
+                        <button type="submit">
+                            🛒 Add to Cart
+                        </button>
+
+                    </form>
+
+                {% else %}
+
+                    <a href="/login" class="menu-button">
+                        Login to Order
+                    </a>
+
+                {% endif %}
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+    </section>
+
+
+    <!-- Contact Section -->
+    <section class="contact-section" id="contact">
+
+        <h2>Contact Café Aroma.coffee 📞</h2>
+
+        <div class="contact-info">
+
+            <p>
+                📍 <strong>Address:</strong><br>
+                Street Number One, M Zero,<br>
+                Chikkaballapur, Karnataka
+            </p>
+
+            <p>
+                📧 <strong>Email:</strong><br>
+                cafe.aroma@neha.com
+            </p>
+
+            <p>
+                📸 <strong>Instagram:</strong><br>
+                cafe.aroma@neha.com
+            </p>
+
+            <p>
+                🕘 <strong>Opening Hours:</strong><br>
+                9:00 AM – 10:00 PM
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- Footer -->
+    <footer>
+
+        <h3>☕ Café Aroma.coffee</h3>
+
+        <p>
+            Street Number One, M Zero, Chikkab

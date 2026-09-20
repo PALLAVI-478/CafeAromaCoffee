@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Owner Dashboard - Café Aroma</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+    <style>
+
+        .dashboard {
+            min-height: 100vh;
+            background: #f8f3ed;
+        }
+
+        .dashboard-header {
+            background: #2b1b12;
+            color: white;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .dashboard-header a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .dashboard-content {
+            max-width: 1100px;
+            margin: auto;
+            padding: 40px 20px;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns:
+                repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .stat-card,
+        .management-card {
+            background: white;
+            padding: 25px;
+            border-radius: 18px;
+            box-shadow:
+                0 5px 20px
+                rgba(0,0,0,0.08);
+        }
+
+        .stat-card h2 {
+            font-size: 30px;
+            color: #6f4329;
+        }
+
+        .management {
+            margin-top: 40px;
+            display: grid;
+            grid-template-columns:
+                repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .management-card a {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 10px 18px;
+            background: #6f4329;
+            color: white;
+            border-radius: 20px;
+            text-decoration: none;
+        }
+
+        @media(max-width:700px) {
+
+            .stats,
+            .management {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="dashboard">
+
+    <header class="dashboard-header">
+
+        <h2>
+            ☕ Café Aroma
+        </h2>
+
+        <a href="/owner-logout">
+            Logout
+        </a>
+
+    </header>
+
+
+    <div class="dashboard-content">
+
+        <h1>
+            Owner Dashboard
+        </h1>
+
+
+        <div class="stats">
+
+            <div class="stat-card">
+
+                <h3>
+                    👥 Customers
+                </h3>
+
+                <h2>
+                    {{ customer_count }}
+                </h2>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <h3>
+                    🍴 Menu Items
+                </h3>
+
+                <h2>
+                    {{ menu_count }}
+                </h2>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <h3>
+                    📦 Orders
+                </h3>
+
+                <h2>
+                    0
+                </h2>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <h3>
+                    💰 Revenue
+                </h3>
+
+                <h2>
+                    ₹0
+                </h2>
+
+            </div>
+
+        </div>
+
+
+        <h2>
+            Management
+        </h2>
+
+
+        <div class="management">
+
+            <div class="management-card">
+
+                <h2>
+                    🍴 Menu Management
+                </h2>
+
+                <p>
+                    Add, edit and delete menu items.
+                </p>
+
+                <a href="/menu">
+                    Manage Menu
+                </a>
+
+            </div>
+
+
+            <div class="management-card">
+
+                <h2>
+                    📦 Order Management
+                </h2>
+
+                <p>
+                    View customer orders.
+                </p>
+
+                <a href="#">
+                    View Orders
+                </a>
+
+            </div>
+
+
+            <div class="management-card">
+
+                <h2>
+                    👥 Customers
+                </h2>
+
+                <p>
+                    View registered customers.
+                </p>
+
+                <a href="#">
+                    View Customers
+                </a>
+
+            </div>
+
+
+            <div class="management-card">
+
+                <h2>
+                    🌐 Website
+                </h2>
+
+                <p>
+                    Open customer website.
+                </p>
+
+                <a href="/">
+                    View Website
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

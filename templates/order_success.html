@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Order Placed - Café Aroma.coffee</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+    <style>
+        .success-page {
+            min-height: 100vh;
+            background: #f8f3ed;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 30px;
+        }
+
+        .success-box {
+            background: white;
+            max-width: 600px;
+            width: 100%;
+            padding: 50px 30px;
+            border-radius: 22px;
+            text-align: center;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.1);
+        }
+
+        .success-icon {
+            font-size: 70px;
+        }
+
+        .success-box h1 {
+            color: #6f4329;
+            margin: 15px 0;
+        }
+
+        .order-number {
+            font-size: 22px;
+            font-weight: bold;
+            color: #5a2d1b;
+            margin: 20px 0;
+        }
+
+        .order-total {
+            font-size: 20px;
+            margin: 10px 0;
+        }
+
+        .order-status {
+            display: inline-block;
+            margin: 15px 0;
+            padding: 8px 18px;
+            border-radius: 20px;
+            background: #fff0df;
+            color: #6f4329;
+            font-weight: bold;
+        }
+
+        .success-buttons {
+            margin-top: 25px;
+        }
+
+        .success-buttons a {
+            display: inline-block;
+            margin: 6px;
+            padding: 12px 22px;
+            border-radius: 25px;
+            background: #6f4329;
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .success-buttons a:hover {
+            background: #4f2e1d;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="success-page">
+
+    <div class="success-box">
+
+        <div class="success-icon">
+            ✅
+        </div>
+
+        <h1>
+            Order Placed Successfully!
+        </h1>
+
+        <p>
+            Thank you for ordering from Café Aroma.coffee ☕
+        </p>
+
+        <div class="order-number">
+            Order #{{ order["id"] }}
+        </div>
+
+        <div class="order-total">
+            Total:
+            <strong>
+                ₹{{ "%.2f"|format(order["total"]) }}
+            </strong>
+        </div>
+
+        <div class="order-status">
+            {{ order["status"] }}
+        </div>
+
+        <p>
+            Your order has been received by the café.
+        </p>
+
+        <div class="success-buttons">
+
+            <a href="/my-orders">
+                📦 My Orders
+            </a>
+
+            <a href="/">
+                ☕ Continue Shopping
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

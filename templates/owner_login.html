@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Owner Login - Café Aroma</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+
+<div class="login-page">
+
+    <div class="login-box">
+
+        <div class="login-logo">
+            👨‍💼
+        </div>
+
+        <h1>
+            Owner Login
+        </h1>
+
+        <p>
+            Café Aroma Management
+        </p>
+
+        <form method="POST"
+              action="/owner-login">
+
+            <label>
+                Owner Email
+            </label>
+
+            <input
+                type="email"
+                name="email"
+                placeholder="Enter owner email"
+                required
+            >
+
+            <label>
+                Password
+            </label>
+
+            <input
+                type="password"
+                name="password"
+                placeholder="Enter owner password"
+                required
+            >
+
+            <button type="submit">
+                Login as Owner
+            </button>
+
+        </form>
+
+        <p class="register-text">
+
+            Customer?
+
+            <a href="/login">
+                Customer Login
+            </a>
+
+        </p>
+
+        <a href="/" class="back-home">
+            ← Back to Home
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>
